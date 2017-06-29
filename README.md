@@ -140,12 +140,12 @@ git init
 
 - 将本项目作为上游代码仓库：
 ```
-git remote add upstream https://gitlab.spetechcular.com/asum/frontend_boilerplate.git
+git remote add upstream https://github.com/dayzhou/UUI.git
 ```
 
 - 将你自己的git项目作为主仓库：
 ```
-git remote add origin https://gitlab.spetechcular.com/asum/<your-project-name>.git
+git remote add origin https://github.com/<your-github-account>/<your-project-name>.git
 ```
 
 - 在项目根目录下创建目录`src`，在其中开发你自己项目的代码（可参考`demo`目录下的代码示例）
