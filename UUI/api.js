@@ -1,9 +1,18 @@
 import superagent from 'superagent';
 
-function makeRequest(path, method) {
-  const prefix = (path[0] === '/' ? '/api' : '/api/');
-  const uri = prefix + path;
+function normalizePath(path) {
+  if (typeof(path) === "string" && path.length > 0 && path !== '/') {
+    return path[0] === '/' ? path : `/${path}`;
+  }
+  return '/';
+}
 
+function normalizeURI(path, prefix) {
+  prefix = normalizePath(prefix);
+  return (prefix === '/' ? '' : prefix) + normalizePath(path);
+}
+
+function makeRequest(uri, method) {
   const token = window.localStorage.token || '';
   const base64token = new Buffer(token).toString('base64');
 
@@ -12,36 +21,41 @@ function makeRequest(path, method) {
     .type('form');
 }
 
-const api = {};
+const api = {
+  prefix: "",
+};
+
 ['get', 'post', 'put', 'delete'].forEach((method) => {
   api[method] = (path, data, files) => (successAction, failAction) => {
+    path = normalizeURI(path, api.prefix);
+
     return new Promise((resolve, reject) => {
       const request = makeRequest(path, method);
 
       switch (method) {
-      case 'get':
-        if (data) {
-          request.query(data);
-        }
-        break;
-
-      case 'post':
-      case 'put':
-        if (files) {
-          files.forEach((file) => request.attach('file[]', file));
+        case 'get':
           if (data) {
-            Object.keys(data).forEach((key) => {
-              request.field(key, data[key]);
-            });
+            request.query(data);
           }
-        } else if (data) {
-          request.send(data);
-        }
-        break;
+          break;
 
-      case 'delete':
-      default:
-        break;
+        case 'post':
+        case 'put':
+          if (files) {
+            files.forEach((file) => request.attach('file[]', file));
+            if (data) {
+              Object.keys(data).forEach((key) => {
+                request.field(key, data[key]);
+              });
+            }
+          } else if (data) {
+            request.send(data);
+          }
+          break;
+
+        case 'delete':
+        default:
+          break;
       }
 
       request.end((err, { body }) => {

@@ -1,4 +1,4 @@
-import UUI from '../../../UUI';
+import { api } from '../../../UUI';
 
 const prefix = 'RESET_PASSWORD';
 
@@ -14,7 +14,7 @@ const REMOVE_RESET_INFO = `${prefix}/REMOVE_RESET_INFO`;
 export function reset(oldPassword, password) {
   return [
     { type: RESET },
-    UUI.api.post(`/change-password`, { oldPassword, password })(
+    api.post(`/change-password`, { oldPassword, password })(
       { type: RESET_SUCCESS },
       { type: RESET_FAIL }
     )

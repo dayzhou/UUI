@@ -1,11 +1,10 @@
 import UUI from './UUI.jsx';
 import { Alert } from './components';
-import createStore from './createStore';
-import api from './api';
+
+export createStore from './createStore';
+export api from './api';
 
 export default {
-  UUI,
-  createStore,
-  api,
+  Page: UUI,
   Alert
 };
