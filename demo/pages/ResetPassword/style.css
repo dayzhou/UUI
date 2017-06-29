@@ -1,0 +1,12 @@
+.change-password {
+  margin-top: 30px;
+}
+
+.change-password > button {
+  margin-top: 10px;
+}
+
+.change-password i {
+  margin-left: 7px;
+  font-size: 14px;
+}

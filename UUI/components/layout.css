@@ -1,0 +1,59 @@
+/* -------------- spinner ------------ */
+
+.gi-spin {
+  -webkit-animation: spin 1500ms infinite linear;
+  animation: spin 2000ms infinite linear;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+/* -------------------------- */
+
+.menubar {
+
+}
+
+nav {
+  font-size: 1.2em;
+}
+
+.padding {
+  padding-top: 51px;
+}
+
+.signin-page {
+  margin-top: 60px;
+}
+
+.signin-form {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.signin-form i {
+  margin-left: 7px;
+  font-size: 14px;
+}
+
+.info-bar {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
