@@ -8,7 +8,7 @@ import { App, NotFound, DevTools } from './components';
 import UUIreducer, { loadUser } from './reducer';
 
 
-function routes(store, title, showSignin) {
+function routes(store, title, showSignin = true) {
   const requireLogin = (nextState, replace, callback) => {
     const { _UUI_: { user } } = store.getState();
     if (!(user && user.id && user.email)) {
@@ -48,11 +48,14 @@ function routes(store, title, showSignin) {
 
   const indexRoute = routes['/']
   const IndexComponent = indexRoute && indexRoute.component;
+  const onEnterIndex = indexRoute.nonLogin
+    ? () => replaceReducer(indexRoute.reducer)
+    : requireLogin;
 
   return (
     <Route path="/" component={App(title, showSignin)}>
       <IndexRoute component={IndexComponent}
-        onEnter={IndexComponent && !indexRoute.nonLogin && requireLogin}
+        onEnter={IndexComponent && onEnterIndex}
       />
       <Route onEnter={requireLogin}>{
         loginRequiredRoutes.map(([uri, { component, reducer }], index) =>

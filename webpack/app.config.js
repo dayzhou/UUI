@@ -51,8 +51,7 @@ if (_PROD_) {
         NODE_ENV: JSON.stringify("production")
       }
     }),
-    new Webpack.optimize.DedupePlugin(),
-    new Webpack.optimize.OccurenceOrderPlugin(),
+    //new Webpack.optimize.OccurenceOrderPlugin(),
     new Webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false

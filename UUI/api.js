@@ -58,31 +58,30 @@ const api = {
           break;
       }
 
-      request.end((err, { body }) => {
+      request.end((err, { text }) => {
+        const response = JSON.parse(text);
         if (!window._PROD_) {
           console.log(`\n>>>> ${path} [${method}]`);
           if (err) {
             console.warn('\n>>>> error:', err);
           }
           console.log(
-            `\n>>>> body (status: ${body && body.status}):`,
-            (body && body.error) ? '\n  >> error:' : '',
-            (body && body.error) || '',
-            (body && body.result) ? '\n  >> result:' : '',
-            (body && body.result) || ''
+            `\n>>>> response (status: ${response && response.status}):`,
+            (response && response.error) ? '\n  >> error:' : '',
+            (response && response.error) || '',
+            response ? '\n  >> data:' : '',
+            response ? response.data : ''
           );
           console.log('\n');
         }
 
-        let error, result;
-        if (err && !body) {
+        let error;
+        if (err && !response) {
           error = err;
-        } else if (err && body) {
-          error = body.error;
-        } else if (body && body.status) {
-          error = body.error;
-        } else {
-          result = body.result;
+        } else if (err && response) {
+          error = response.error;
+        } else if (response && response.status) {
+          error = response.error;
         }
 
         if (error) {
@@ -97,11 +96,11 @@ const api = {
           }
         } else {
           if (typeof successAction === 'function') {
-            return resolve(successAction(result));
+            return resolve(successAction(response.data));
           } else if (typeof successAction === 'object') {
-            return resolve({ ...successAction, result });
+            return resolve({ ...successAction, data: response.data });
           } else if (typeof successAction === 'string') {
-            return resolve({ type: successAction, result });
+            return resolve({ type: successAction, data: response.data });
           } else {
             resolve({ type: '@_NO_STATE_CHANGE' });
           }
