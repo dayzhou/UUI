@@ -18,13 +18,13 @@ const transporter = nodemailer.createTransport({
 function mailOptions(to, addr, token) {
   const url = `http://${addr}/active?token=${token}`;
   return {
-    from: '"思必驰数据标注平台" <aispeech.com>',
+    from: '"demo" <xxx.com>',
     to,
-    subject: '思必驰数据标注平台帐号激活',
+    subject: 'xxx帐号激活',
     html: (
-      '<p>您好！您已成功注册思必驰数据标注平台帐号，请点击下面的链接激活您的帐号。</p>' +
+      '<p>您好！您已成功注册xxx帐号，请点击下面的链接激活您的帐号。</p>' +
       `<br/><p><a href="${url}" target="_blank">${url}</a></p>` +
-      '<br/>--<p>思必驰数据标注平台</p>'
+      '<br/>--<p>xxx</p>'
     )
   };
 }
